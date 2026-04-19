@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Luca Studio — Sitios web que generan clientes. Diseño editorial brutalista entregado en 10 días desde $200." />
+  <title>Luca Studio — Sitios web que generan clientes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void:        '#080A0F',
+            canvas:      '#0F1117',
+            surface:     '#1e1f25',
+            surfaceHigh: '#37393f',
+            lime:        '#C8F135',
+            limeDim:     '#a8cc1a',
+            text:        '#E8EAF0',
+            muted:       '#8f937b',
+            chip:        '#46494e',
+            border:      '#1E2330',
+          },
+          fontFamily: {
+            display: ['"Bebas Neue"', 'sans-serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+            mono:    ['"DM Mono"', 'monospace'],
+          },
+          letterSpacing: { hero: '-0.02em', wide: '0.02em' },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ─── CSS VARIABLES (clonable por cliente) ─── */
+    :root {
+      --c-bg:      #080A0F;
+      --c-canvas:  #0F1117;
+      --c-surface: #1e1f25;
+      --c-accent:  #C8F135;
+      --c-text:    #E8EAF0;
+      --c-muted:   #8f937b;
+      --c-border:  #1E2330;
+      --f-display: 'Bebas Neue', sans-serif;
+      --f-body:    'DM Sans', sans-serif;
+      --f-mono:    'DM Mono', monospace;
+    }
+
+    /* ─── GRAIN TEXTURE ─── */
+    body { background: var(--c-bg); color: var(--c-text); font-family: var(--f-body); overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 180px;
+    }
+
+    /* ─── CURSOR ─── */
+    * { cursor: none !important; }
+    #cursor {
+      width: 12px; height: 12px; background: var(--c-accent);
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;
+      transition: transform 80ms linear, width 150ms linear, height 150ms linear;
+    }
+    #cursor.expanded { width: 40px; height: 40px; transform: translate(-14px, -14px); background: transparent; border: 1px solid var(--c-accent); }
+
+    /* ─── TRANSITIONS ─── */
+    .snap { transition: all 150ms cubic-bezier(0.4,0,0.2,1); }
+
+    /* ─── BUTTONS ─── */
+    .btn-primary {
+      background: var(--c-accent); color: #293500; font-family: var(--f-display);
+      letter-spacing: 0.05em; border-radius: 0; display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; font-size: 1.05rem; border: none;
+      transition: background 150ms linear;
+    }
+    .btn-primary:hover { background: #a8cc1a; }
+
+    .btn-ghost {
+      background: transparent; color: var(--c-text); font-family: var(--f-display);
+      letter-spacing: 0.05em; border-radius: 0; display: inline-flex; align-items: center;
+      padding: 14px 32px; font-size: 1.05rem;
+      border: 1px solid rgba(143,147,123,0.4);
+      transition: border-color 150ms linear, color 150ms linear;
+    }
+    .btn-ghost:hover { border-color: var(--c-accent); color: var(--c-accent); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-track { display: flex; width: max-content; animation: marquee 22s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ─── FORM INPUTS ─── */
+    .field {
+      background: var(--c-surface); border: none;
+      border-bottom: 1px solid rgba(143,147,123,0.3);
+      color: var(--c-text); font-family: var(--f-body);
+      padding: 12px 0; width: 100%; outline: none; font-size: 0.95rem;
+      transition: border-color 150ms linear;
+    }
+    .field:focus { border-bottom-color: var(--c-accent); }
+    .field::placeholder { color: rgba(143,147,123,0.55); font-family: var(--f-mono); font-size: 0.82rem; }
+    select.field { background: var(--c-surface); appearance: none; }
+
+    /* ─── CHIP ─── */
+    .chip {
+      display: inline-block; background: #46494e; color: var(--c-text);
+      font-family: var(--f-mono); font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.1em; padding: 4px 10px;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── NAV ─── */
+    nav { background: rgba(8,10,15,0.88); backdrop-filter: blur(20px); }
+
+    /* ─── LOGO IMAGE ─── */
+    .logo-img {
+      height: 36px; width: auto; object-fit: contain;
+      display: block;
+      /* Fallback si no hay imagen: muestra texto */
+    }
+    .logo-fallback {
+      font-family: var(--f-display); font-size: 1.6rem;
+      letter-spacing: 0.04em; color: var(--c-text); line-height: 1;
+    }
+    .logo-fallback span { color: var(--c-accent); }
+
+    /* ─── HERO GRID BG ─── */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--c-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--c-border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    /* ─── GLITCH ─── */
+    @keyframes glitch {
+      0%,100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+      20%      { clip-path: inset(20% 0 50% 0); transform: translate(-3px,1px); }
+      40%      { clip-path: inset(60% 0 10% 0); transform: translate(3px,-1px); }
+      60%      { clip-path: inset(40% 0 40% 0); transform: translate(-2px,2px); }
+      80%      { clip-path: inset(80% 0 5%  0); transform: translate(2px,-2px); }
+    }
+    .glitch-layer { animation: glitch 3.5s steps(1) infinite; color: var(--c-accent); position: absolute; inset: 0; pointer-events: none; }
+
+    /* ─── SERVICE CARDS ─── */
+    .service-card { transition: background 150ms cubic-bezier(0.4,0,0.2,1); }
+    .service-card:hover { background: #141820 !important; }
+
+    /* ─── PROJECT CARDS ─── */
+    .project-card { transition: border-color 150ms cubic-bezier(0.4,0,0.2,1), transform 150ms cubic-bezier(0.4,0,0.2,1); }
+    .project-card:hover { border-color: var(--c-accent) !important; transform: translateY(-4px); }
+
+    /* ─── PLAN CARDS ─── */
+    .plan-card { transition: border-color 150ms cubic-bezier(0.4,0,0.2,1), transform 150ms cubic-bezier(0.4,0,0.2,1); }
+    .plan-card:hover { border-color: var(--c-accent) !important; transform: translateY(-4px); }
+
+    /* ─── PROCESS ─── */
+    .process-step:hover .step-num { color: var(--c-accent) !important; }
+    .step-num { transition: color 150ms cubic-bezier(0.4,0,0.2,1); }
+
+    /* ─── PLAN BTN ─── */
+    .plan-btn-fill { background: var(--c-accent); color: #080A0F; transition: background 150ms linear; }
+    .plan-btn-fill:hover { background: #a8cc1a; }
+    .plan-btn-outline {
+      background: transparent; color: var(--c-text);
+      border: 1px solid rgba(143,147,123,0.4);
+      transition: border-color 150ms linear, color 150ms linear;
+    }
+    .plan-btn-outline:hover { border-color: var(--c-accent); color: var(--c-accent); }
+
+    /* ─── WA FLOAT ─── */
+    .wa-btn {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
+      background: #25D366; color: white;
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 150ms cubic-bezier(0.4,0,0.2,1), box-shadow 150ms;
+    }
+    .wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+    .wa-btn svg { width: 28px; height: 28px; fill: white; }
+
+    /* ─── TAG (portfolio) ─── */
+    .ptag {
+      font-family: var(--f-mono); font-size: 0.65rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; background: rgba(200,241,53,0.1);
+      color: var(--c-accent); border: 1px solid rgba(200,241,53,0.2);
+    }
+
+    /* ─── PORTFOLIO MOCKS ─── */
+    .preview-amor    { background: linear-gradient(135deg,#FFF8F0,#FDEFD8); }
+    .preview-santero { background: linear-gradient(135deg,#0D0D12,#1A0A2E); }
+    .preview-taller  { background: linear-gradient(135deg,#0F1923,#1A2A3A); }
+
+    .mock-topbar { height:22px; display:flex; align-items:center; padding:0 8px; gap:5px; background:rgba(0,0,0,0.2); }
+    .dot { width:7px; height:7px; border-radius:50%; }
+
+    .amor-content { background:#FFF8F0; padding:8px; height:calc(100% - 22px); }
+    .amor-hero-mock { background:linear-gradient(135deg,#FF8C42,#FFB347); height:48px; border-radius:3px; margin-bottom:5px; display:flex; align-items:center; justify-content:center; }
+    .amor-hero-mock span { color:white; font-size:8px; font-weight:700; letter-spacing:1px; font-family:'DM Mono',monospace; }
+    .amor-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+    .amor-card { background:white; border-radius:2px; height:24px; border:1px solid #FFE0C0; }
+
+    .santero-content { background:#0D0D12; padding:8px; height:calc(100% - 22px); }
+    .santero-title { font-size:14px; color:#D4AF37; font-family:'Bebas Neue',sans-serif; letter-spacing:2px; margin-bottom:5px; text-align:center; }
+    .santero-line { height:1px; background:linear-gradient(90deg,transparent,#D4AF37,transparent); margin-bottom:7px; }
+    .santero-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; }
+    .santero-box { height:22px; border-radius:2px; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.2); }
+
+    .taller-content { background:#0F1923; padding:8px; height:calc(100% - 22px); }
+    .taller-hero { background:linear-gradient(90deg,#1E3A5F,#2D5A8E); height:44px; border-radius:3px; margin-bottom:5px; display:flex; align-items:center; padding:0 8px; }
+    .taller-text { color:rgba(255,255,255,0.9); font-size:8px; font-family:'DM Mono',monospace; }
+    .taller-row { display:flex; gap:4px; margin-bottom:4px; }
+    .taller-btn { height:16px; flex:1; border-radius:2px; background:rgba(59,130,246,0.3); border:1px solid rgba(59,130,246,0.4); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse  { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hide-mobile { display: none !important; }
+      .contact-grid { grid-template-columns: 1fr !important; }
+      .form-row { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-10 py-4 flex items-center justify-between">
+
+    <!-- LOGO: imagen con fallback en texto -->
+    <a href="#" class="flex items-center">
+      <img
+        src="./logo.png"
+        alt="Luca Studio"
+        class="logo-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      />
+      <!-- Fallback texto (visible si logo.png no existe) -->
+      <span class="logo-fallback" style="display:none;">LUCA<span>.</span>STUDIO</span>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-muted hover:text-lime snap">Servicios</a>
+      <a href="#precios"   class="font-mono text-xs uppercase tracking-widest text-muted hover:text-lime snap">Precios</a>
+      <a href="#portfolio" class="font-mono text-xs uppercase tracking-widest text-muted hover:text-lime snap">Portfolio</a>
+      <a href="#proceso"   class="font-mono text-xs uppercase tracking-widest text-muted hover:text-lime snap">Proceso</a>
+      <a href="#contacto"  class="btn-primary text-sm py-2 px-5">Cotizar →</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button id="menuBtn" class="md:hidden text-text snap" onclick="toggleMenu()">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-void flex flex-col items-center justify-center gap-8">
+    <a href="#servicios" onclick="toggleMenu()" class="font-display text-4xl text-text hover:text-lime snap">SERVICIOS</a>
+    <a href="#precios"   onclick="toggleMenu()" class="font-display text-4xl text-text hover:text-lime snap">PRECIOS</a>
+    <a href="#portfolio" onclick="toggleMenu()" class="font-display text-4xl text-text hover:text-lime snap">PORTFOLIO</a>
+    <a href="#proceso"   onclick="toggleMenu()" class="font-display text-4xl text-text hover:text-lime snap">PROCESO</a>
+    <a href="#contacto"  onclick="toggleMenu()" class="btn-primary mt-4">COTIZAR →</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section id="hero" class="min-h-screen bg-void flex flex-col justify-end px-6 md:px-12 pb-16 pt-32 relative overflow-hidden">
+
+    <!-- Grid background -->
+    <div class="hero-grid"></div>
+
+    <!-- Glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
+         style="background: radial-gradient(ellipse, rgba(200,241,53,0.07) 0%, transparent 70%);"></div>
+
+    <div class="relative z-10 max-w-screen-xl mx-auto w-full">
+
+      <!-- Tag pulsante -->
+      <div class="inline-flex items-center gap-2 mb-8" style="animation: fadeUp 0.6s ease both;">
+        <div class="w-2 h-2 bg-lime" style="animation: pulse 2s infinite; border-radius:0;"></div>
+        <span class="font-mono text-xs uppercase tracking-widest text-lime">Disponible para proyectos · Costa Rica</span>
+      </div>
+
+      <!-- Headline -->
+      <div class="relative" style="animation: fadeUp 0.6s 0.1s ease both;">
+        <h1 class="font-display text-[clamp(4rem,13vw,12rem)] tracking-hero leading-none text-text uppercase">
+          SITIOS WEB<br/><span class="text-lime">QUE VENDEN</span>
+        </h1>
+        <div class="glitch-layer font-display text-[clamp(4rem,13vw,12rem)] tracking-hero leading-none uppercase select-none" aria-hidden="true">
+          SITIOS WEB<br/>QUE VENDEN
+        </div>
+      </div>
+
+      <!-- Subtítulo y CTAs -->
+      <div class="mt-8 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12" style="animation: fadeUp 0.6s 0.2s ease both;">
+        <p class="font-body text-muted text-lg max-w-md leading-relaxed font-light">
+          Páginas dinámicas, diseño moderno y formularios que convierten visitantes en clientes — entregadas en menos de 10 días.
+        </p>
+        <div class="flex gap-4 flex-wrap">
+          <a href="#contacto" class="btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+            Empezar proyecto
+          </a>
+          <a href="#portfolio" class="btn-ghost">Ver trabajos</a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-0 border-t border-border pt-10" style="animation: fadeUp 0.6s 0.35s ease both;">
+        <div class="border-r border-border pr-8 pb-4">
+          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">3+</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Proyectos activos</p>
+        </div>
+        <div class="border-r border-border px-8 pb-4">
+          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">10</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Días de entrega</p>
+        </div>
+        <div class="border-r border-border px-8 pb-4">
+          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">$200</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Desde</p>
+        </div>
+        <div class="pl-8 pb-4">
+          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">100%</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Diseño único</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       MARQUEE
+  ══════════════════════════════════════════ -->
+  <div class="bg-lime py-3 overflow-hidden">
+    <div class="marquee-track select-none">
+      <span class="font-display text-xl tracking-wide text-[#293500] whitespace-nowrap px-8">DISEÑO EDITORIAL ✦ ENTREGA 10 DÍAS ✦ DESDE $200 ✦ CLOUDFLARE HOSTING ✦ SEO INCLUIDO ✦ CÓDIGO LIMPIO ✦ COSTA RICA ✦ </span>
+      <span class="font-display text-xl tracking-wide text-[#293500] whitespace-nowrap px-8">DISEÑO EDITORIAL ✦ ENTREGA 10 DÍAS ✦ DESDE $200 ✦ CLOUDFLARE HOSTING ✦ SEO INCLUIDO ✦ CÓDIGO LIMPIO ✦ COSTA RICA ✦ </span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SERVICIOS
+  ══════════════════════════════════════════ -->
+  <section id="servicios" class="bg-canvas py-24 px-6 md:px-12">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="mb-4 reveal"><span class="font-mono text-xs text-lime uppercase tracking-widest">// Servicios</span></div>
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-wide uppercase text-text mb-4 reveal">Lo que construyo</h2>
+      <p class="font-body text-muted text-lg max-w-xl mb-14 leading-relaxed reveal">Cada sitio es diseñado desde cero — sin plantillas, sin rellenos. Código limpio que carga rápido y se ve profesional.</p>
+
+      <!-- Grid de servicios: gap visual mediante bg-border -->
+      <div class="grid md:grid-cols-3 gap-px bg-border">
+
+        <div class="service-card bg-surface p-10 reveal">
+          <div class="text-3xl mb-6">🎨</div>
+          <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-3">Landing Page</h3>
+          <p class="font-body text-muted text-sm leading-relaxed mb-6">Una página potente que comunica tu propuesta de valor y captura leads con formularios inteligentes.</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Diseño 100% personalizado</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Formulario de contacto funcional</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Optimizado para móviles</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Carga en menos de 2 segundos</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Integración WhatsApp</li>
+          </ul>
+        </div>
+
+        <div class="service-card bg-surface p-10 reveal" style="transition-delay:100ms">
+          <div class="text-3xl mb-6">🛍️</div>
+          <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-3">Presskit / Portafolio</h3>
+          <p class="font-body text-muted text-sm leading-relaxed mb-6">Presencia digital profesional para artistas, músicos, fotógrafos o cualquier marca personal.</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Galería de proyectos dinámica</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Sección de servicios y precios</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Reproductor de media</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Links a redes sociales</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Formulario de booking</li>
+          </ul>
+        </div>
+
+        <div class="service-card bg-surface p-10 reveal" style="transition-delay:200ms">
+          <div class="text-3xl mb-6">⚙️</div>
+          <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-3">Sitio de Negocio</h3>
+          <p class="font-body text-muted text-sm leading-relaxed mb-6">Para talleres, clínicas, salones, o cualquier negocio que necesite presencia web seria y funcional.</p>
+          <ul class="space-y-3">
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Secciones de servicios con precios</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Galería de trabajos</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Mapa + horarios</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>Reseñas y testimonios</li>
+            <li class="flex gap-3 text-sm text-muted"><span class="text-lime font-mono mt-0.5">→</span>CTA de WhatsApp directo</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PRECIOS
+  ══════════════════════════════════════════ -->
+  <section id="precios" class="bg-void py-24 px-6 md:px-12">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="mb-4 reveal"><span class="font-mono text-xs text-lime uppercase tracking-widest">// Precios</span></div>
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-wide uppercase text-text mb-4 reveal">Inversión clara</h2>
+      <p class="font-body text-muted text-lg max-w-xl mb-14 leading-relaxed reveal">Sin sorpresas. El precio incluye diseño, desarrollo, dominio durante 1 año y hosting en Cloudflare (gratis para siempre).</p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Básico -->
+        <div class="plan-card bg-surface border border-border p-10 relative reveal">
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">Básico</p>
+          <div class="font-display text-7xl text-text leading-none mb-1">$200</div>
+          <p class="font-mono text-xs text-muted mb-6">pago único</p>
+          <p class="font-body text-sm text-muted mb-8 pb-8 border-b border-border">Ideal para emprendedores que necesitan presencia web rápida y profesional.</p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Landing page de 1 sección</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Diseño personalizado</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Formulario de contacto</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Botón WhatsApp</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Responsive (móvil/tablet/PC)</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Entrega en 5–7 días</li>
+            <li class="flex gap-3 items-start text-sm" style="color:rgba(143,147,123,0.4)"><span class="font-mono">✗</span>Hosting incluido</li>
+            <li class="flex gap-3 items-start text-sm" style="color:rgba(143,147,123,0.4)"><span class="font-mono">✗</span>Animaciones avanzadas</li>
+          </ul>
+          <button onclick="openWhatsApp('Básico - $200')" class="plan-btn-outline w-full py-4 font-display tracking-widest uppercase text-sm">Quiero este plan</button>
+        </div>
+
+        <!-- Pro (destacado) -->
+        <div class="plan-card bg-surface border border-lime p-10 relative reveal" style="transition-delay:100ms; background: linear-gradient(160deg, rgba(200,241,53,0.04) 0%, #1e1f25 50%);">
+          <div class="absolute top-0 right-6 bg-lime font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 text-[#080A0F]" style="border-radius:0 0 4px 4px;">Más popular</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">Pro</p>
+          <div class="font-display text-7xl text-text leading-none mb-1">$325</div>
+          <p class="font-mono text-xs text-muted mb-6">pago único</p>
+          <p class="font-body text-sm text-muted mb-8 pb-8 border-b border-border">El equilibrio perfecto entre precio y resultado. Para negocios que quieren impresionar.</p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Sitio multipágina (4–6 secciones)</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Diseño premium con animaciones</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Formularios dinámicos JS</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Galería interactiva</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>WhatsApp + redes sociales</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>SEO básico configurado</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Hosting Cloudflare incluido</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Entrega en 7–10 días</li>
+          </ul>
+          <button onclick="openWhatsApp('Pro - $325')" class="plan-btn-fill w-full py-4 font-display tracking-widest uppercase text-sm">Quiero este plan</button>
+        </div>
+
+        <!-- Premium -->
+        <div class="plan-card bg-surface border border-border p-10 relative reveal" style="transition-delay:200ms">
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">Premium</p>
+          <div class="font-display text-7xl text-text leading-none mb-1">$450</div>
+          <p class="font-mono text-xs text-muted mb-6">pago único</p>
+          <p class="font-body text-sm text-muted mb-8 pb-8 border-b border-border">Para marcas que no aceptan el promedio. Diseño de agencia sin el precio de agencia.</p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Todo lo del plan Pro</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Diseño editorial avanzado</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Animaciones al scroll</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Integración con Instagram/TikTok</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Panel de contactos simple</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>1 mes de soporte incluido</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Hosting Cloudflare incluido</li>
+            <li class="flex gap-3 items-start text-sm text-muted"><span class="text-lime font-mono">✓</span>Entrega en 10–14 días</li>
+          </ul>
+          <button onclick="openWhatsApp('Premium - $450')" class="plan-btn-outline w-full py-4 font-display tracking-widest uppercase text-sm">Quiero este plan</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PORTFOLIO
+  ══════════════════════════════════════════ -->
+  <section id="portfolio" class="bg-canvas py-24 px-6 md:px-12">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="mb-4 reveal"><span class="font-mono text-xs text-lime uppercase tracking-widest">// Portfolio</span></div>
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-wide uppercase text-text mb-4 reveal">Proyectos reales</h2>
+      <p class="font-body text-muted text-lg max-w-xl mb-14 leading-relaxed reveal">Cada proyecto fue diseñado y desarrollado a medida para el cliente, no desde plantillas genéricas.</p>
+
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Proyecto 01 — placeholder imagen real -->
+        <div class="project-card bg-void border border-border reveal">
+          <div class="h-56 overflow-hidden relative">
+            <img
+              src="./img/preview-proyecto-01.jpg"
+              alt="Proyecto 01 — Luca Studio"
+              class="w-full h-full object-cover object-top"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <!-- Fallback placeholder -->
+            <div class="absolute inset-0 bg-surface items-center justify-center flex-col gap-3" style="display:none;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#37393f" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/></svg>
+              <span class="font-mono text-xs uppercase tracking-widest" style="color:#37393f;">img/preview-proyecto-01.jpg</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-4">
+              <span class="ptag">Grooming</span>
+              <span class="ptag">Tailwind CSS</span>
+              <span class="ptag">Bento Grid</span>
+            </div>
+            <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-2">Amor de Perro</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Salón de grooming canino en Moravia. Landing page con bento grid de servicios, tabla de precios, galería de Instagram y CTA WhatsApp.</p>
+          </div>
+        </div>
+
+        <!-- Proyecto 02 — placeholder imagen real -->
+        <div class="project-card bg-void border border-border reveal" style="transition-delay:100ms">
+          <div class="h-56 overflow-hidden relative">
+            <img
+              src="./img/preview-proyecto-02.jpg"
+              alt="Proyecto 02 — Luca Studio"
+              class="w-full h-full object-cover object-top"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="absolute inset-0 bg-surface items-center justify-center flex-col gap-3" style="display:none;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#37393f" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/></svg>
+              <span class="font-mono text-xs uppercase tracking-widest" style="color:#37393f;">img/preview-proyecto-02.jpg</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-4">
+              <span class="ptag">Presskit</span>
+              <span class="ptag">Material Design 3</span>
+              <span class="ptag">Dark Theme</span>
+            </div>
+            <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-2">Santero DJ</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Presskit digital para artista musical. Diseño dark con temática dorada, reproductor de tracks y formulario de booking para eventos.</p>
+          </div>
+        </div>
+
+        <!-- Proyecto 03 — placeholder imagen real -->
+        <div class="project-card bg-void border border-border reveal" style="transition-delay:200ms">
+          <div class="h-56 overflow-hidden relative">
+            <img
+              src="./img/preview-proyecto-03.jpg"
+              alt="Proyecto 03 — Luca Studio"
+              class="w-full h-full object-cover object-top"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="absolute inset-0 bg-surface items-center justify-center flex-col gap-3" style="display:none;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#37393f" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 21V9"/></svg>
+              <span class="font-mono text-xs uppercase tracking-widest" style="color:#37393f;">img/preview-proyecto-03.jpg</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-2 flex-wrap mb-4">
+              <span class="ptag">Industrial</span>
+              <span class="ptag">Tailwind CSS</span>
+              <span class="ptag">Lima, Perú</span>
+            </div>
+            <h3 class="font-display text-2xl tracking-wide text-text uppercase mb-2">Taller Victoria</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Landing page para taller de mecánica industrial en Lima, Perú. Diseño robusto con secciones de servicios, formulario de cotización y ubicación.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PROCESO
+  ══════════════════════════════════════════ -->
+  <section id="proceso" class="bg-void py-24 px-6 md:px-12">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="mb-4 reveal"><span class="font-mono text-xs text-lime uppercase tracking-widest">// Proceso</span></div>
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-wide uppercase text-text mb-4 reveal">Cómo trabajo</h2>
+      <p class="font-body text-muted text-lg max-w-xl mb-14 leading-relaxed reveal">Un proceso claro y sin sorpresas. Tú me das la información, yo construyo el sitio.</p>
+
+      <div class="max-w-2xl flex flex-col">
+
+        <div class="process-step grid gap-8 reveal" style="grid-template-columns:72px 1fr">
+          <div class="flex flex-col items-center">
+            <span class="step-num font-display text-5xl text-border leading-none">01</span>
+            <div class="w-px flex-1 bg-border mt-2 min-h-[40px]"></div>
+          </div>
+          <div class="pb-12">
+            <p class="font-mono text-xs text-lime uppercase tracking-widest mb-2">Día 1</p>
+            <h3 class="font-display text-2xl text-text uppercase tracking-wide mb-3">Consulta inicial</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Me contactás por WhatsApp o el formulario. Hablamos 30 minutos sobre tu negocio, qué necesitás y qué presupuesto tenés. Sin compromiso.</p>
+          </div>
+        </div>
+
+        <div class="process-step grid gap-8 reveal" style="grid-template-columns:72px 1fr; transition-delay:100ms">
+          <div class="flex flex-col items-center">
+            <span class="step-num font-display text-5xl text-border leading-none">02</span>
+            <div class="w-px flex-1 bg-border mt-2 min-h-[40px]"></div>
+          </div>
+          <div class="pb-12">
+            <p class="font-mono text-xs text-lime uppercase tracking-widest mb-2">Días 2–3</p>
+            <h3 class="font-display text-2xl text-text uppercase tracking-wide mb-3">Propuesta y diseño</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Te envío una propuesta con precio fijo y boceto inicial del diseño. Una vez aprobado, inicio el desarrollo inmediatamente.</p>
+          </div>
+        </div>
+
+        <div class="process-step grid gap-8 reveal" style="grid-template-columns:72px 1fr; transition-delay:200ms">
+          <div class="flex flex-col items-center">
+            <span class="step-num font-display text-5xl text-border leading-none">03</span>
+            <div class="w-px flex-1 bg-border mt-2 min-h-[40px]"></div>
+          </div>
+          <div class="pb-12">
+            <p class="font-mono text-xs text-lime uppercase tracking-widest mb-2">Días 4–9</p>
+            <h3 class="font-display text-2xl text-text uppercase tracking-wide mb-3">Desarrollo</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Construyo el sitio con HTML/CSS/JavaScript. Te muestro avances cada 2 días. Podés pedir ajustes en tiempo real.</p>
+          </div>
+        </div>
+
+        <div class="process-step grid gap-8 reveal" style="grid-template-columns:72px 1fr; transition-delay:300ms">
+          <div class="flex flex-col items-center">
+            <span class="step-num font-display text-5xl text-border leading-none">04</span>
+          </div>
+          <div class="pb-4">
+            <p class="font-mono text-xs text-lime uppercase tracking-widest mb-2">Día 10</p>
+            <h3 class="font-display text-2xl text-text uppercase tracking-wide mb-3">Entrega y lanzamiento</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">Publico el sitio en Cloudflare Pages con tu dominio. Te entrego acceso completo y una pequeña guía de uso. Listo para generar clientes.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONTACTO
+  ══════════════════════════════════════════ -->
+  <section id="contacto" class="bg-canvas py-24 px-6 md:px-12">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="mb-4 reveal"><span class="font-mono text-xs text-lime uppercase tracking-widest">// Contacto</span></div>
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] tracking-wide uppercase text-text mb-4 reveal">Hablemos de<br/>tu proyecto</h2>
+      <p class="font-body text-muted text-lg max-w-lg mb-14 leading-relaxed reveal">Respondé en menos de 24 horas. Presupuesto sin costo ni compromiso.</p>
+
+      <div class="contact-grid grid md:grid-cols-2 gap-16">
+
+        <!-- Info -->
+        <div class="flex flex-col gap-0 reveal">
+          <div class="flex items-center gap-4 py-5 border-b border-border">
+            <div class="w-10 h-10 border border-border flex items-center justify-center text-lg flex-shrink-0">💬</div>
+            <div>
+              <p class="font-mono text-xs text-muted uppercase tracking-widest">WhatsApp</p>
+              <p class="font-body text-text">+506 ···· ····</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 py-5 border-b border-border">
+            <div class="w-10 h-10 border border-border flex items-center justify-center text-lg flex-shrink-0">📧</div>
+            <div>
+              <p class="font-mono text-xs text-muted uppercase tracking-widest">Email</p>
+              <a href="mailto:hola@lucastudio.com" class="font-body text-text hover:text-lime snap">hola@lucastudio.com</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 py-5 border-b border-border">
+            <div class="w-10 h-10 border border-border flex items-center justify-center text-lg flex-shrink-0">📍</div>
+            <div>
+              <p class="font-mono text-xs text-muted uppercase tracking-widest">Ubicación</p>
+              <p class="font-body text-text">Moravia, San José, Costa Rica</p>
+            </div>
+          </div>
+
+          <div class="mt-10 p-6 bg-surface border-l-2 border-lime">
+            <p class="font-display text-2xl text-text uppercase mb-2">¿Tenés prisa?</p>
+            <p class="font-mono text-xs text-muted mb-4">Escribime directo y arrancamos hoy.</p>
+            <a id="directWA" href="https://wa.me/50600000000?text=Hola!%20Vi%20tu%20portafolio%20y%20me%20interesa%20una%20cotizaci%C3%B3n%20para%20mi%20sitio%20web"
+               target="_blank" class="btn-primary block text-center">WhatsApp directo →</a>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="reveal" style="transition-delay:150ms">
+          <div id="formStatus" class="hidden mb-6 p-4 bg-surface font-mono text-xs"></div>
+
+          <div class="space-y-8">
+            <div class="grid grid-cols-2 gap-6 form-row">
+              <div>
+                <label class="font-mono text-xs text-muted uppercase tracking-widest block mb-2">Nombre *</label>
+                <input id="f_name" type="text" class="field" placeholder="Tu nombre" />
+              </div>
+              <div>
+                <label class="font-mono text-xs text-muted uppercase tracking-widest block mb-2">Negocio</label>
+                <input id="f_biz" type="text" class="field" placeholder="Nombre del negocio" />
+              </div>
+            </div>
+            <div>
+              <label class="font-mono text-xs text-muted uppercase tracking-widest block mb-2">Email *</label>
+              <input id="f_email" type="email" class="field" placeholder="tu@email.com" />
+            </div>
+            <div>
+              <label class="font-mono text-xs text-muted uppercase tracking-widest block mb-2">Plan de interés</label>
+              <select id="f_plan" class="field">
+                <option value="">Seleccioná un plan</option>
+                <option value="Básico — $200">Básico — $200</option>
+                <option value="Pro — $325 (Más popular)">Pro — $325 ⭐ Más popular</option>
+                <option value="Premium — $450">Premium — $450</option>
+                <option value="Solo quiero consultar">Solo quiero consultar</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-mono text-xs text-muted uppercase tracking-widest block mb-2">¿Qué necesitás? *</label>
+              <textarea id="f_msg" class="field resize-none" rows="4" placeholder="Contame sobre tu negocio y qué esperás del sitio web..."></textarea>
+            </div>
+            <div>
+              <button onclick="sendToWhatsApp()" class="btn-primary w-full justify-center text-lg">
+                Enviar mensaje →
+              </button>
+              <p class="font-mono text-xs text-muted mt-3">Al enviar serás redirigido a WhatsApp con tu consulta pre-armada.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer class="bg-void border-t border-border py-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="font-display text-xl text-muted tracking-wide">LUCA<span class="text-lime">.</span>STUDIO</div>
+    <p class="font-mono text-xs text-muted">© 2025 · Diseño y desarrollo web · Costa Rica</p>
+    <div class="flex gap-6">
+      <a href="https://instagram.com/" target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase">Instagram</a>
+      <a href="https://linkedin.com/" target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="wa-btn" href="https://wa.me/50600000000?text=Hola!%20Vi%20tu%20portafolio%20y%20me%20interesa%20una%20cotizaci%C3%B3n%20para%20mi%20sitio%20web" target="_blank" rel="noopener" title="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ══════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════ -->
+  <script>
+  const CONFIG = {
+    whatsappNumber: '50600000000', // ← Cambia por tu número real
+  };
+
+  /* ─── CUSTOM CURSOR ─── */
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top  = e.clientY - 6 + 'px';
+  });
+  document.querySelectorAll('a,button,select,input,textarea').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+  });
+
+  /* ─── MOBILE MENU ─── */
+  function toggleMenu() {
+    const m = document.getElementById('mobileMenu');
+    m.classList.toggle('hidden');
+    m.classList.toggle('flex');
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ─── WHATSAPP — FORMULARIO ─── */
+  function sendToWhatsApp() {
+    const name  = document.getElementById('f_name').value.trim();
+    const biz   = document.getElementById('f_biz').value.trim();
+    const email = document.getElementById('f_email').value.trim();
+    const plan  = document.getElementById('f_plan').value;
+    const msg   = document.getElementById('f_msg').value.trim();
+    const status = document.getElementById('formStatus');
+
+    if (!name || !email || !msg) {
+      status.textContent = '⚠ Completá nombre, email y mensaje antes de enviar.';
+      status.className = 'mb-6 p-4 bg-surface font-mono text-xs text-[#ff6b6b]';
+      return;
+    }
+
+    const waMsg = encodeURIComponent(
+`¡Hola! Soy ${name}${biz ? ` de ${biz}` : ''} (${email}).
+Plan de interés: ${plan || 'Por consultar'}
+
+${msg}`
+    );
+
+    status.textContent = '✓ Redirigiendo a WhatsApp…';
+    status.className = 'mb-6 p-4 bg-surface font-mono text-xs text-lime';
+
+    setTimeout(() => window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${waMsg}`, '_blank'), 600);
+  }
+
+  /* ─── WHATSAPP — PLANES ─── */
+  function openWhatsApp(plan) {
+    const text = encodeURIComponent(`¡Hola! Me interesa el plan ${plan}. ¿Podemos hablar?`);
+    window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${text}`, '_blank');
+  }
+
+  /* ─── NAV ACTIVE ─── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(l => {
+      const isActive = l.getAttribute('href') === `#${current}`;
+      l.style.color = isActive ? 'var(--c-accent)' : '';
+    });
+  }, { passive: true });
+  </script>
+
+</body>
+</html>

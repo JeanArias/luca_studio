@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Términos de Servicio de Luca Studio. Condiciones de contratación, pagos, entregas y garantías." />
+  <title>Términos de Servicio — Luca Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void:        '#080A0F',
+            canvas:      '#0F1117',
+            surface:     '#1e1f25',
+            surfaceHigh: '#37393f',
+            lime:        '#C8F135',
+            limeDim:     '#a8cc1a',
+            text:        '#E8EAF0',
+            muted:       '#8f937b',
+            chip:        '#46494e',
+            border:      '#1E2330',
+          },
+          fontFamily: {
+            display: ['"Bebas Neue"', 'sans-serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+            mono:    ['"DM Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --c-bg:      #080A0F;
+      --c-canvas:  #0F1117;
+      --c-surface: #1e1f25;
+      --c-accent:  #C8F135;
+      --c-text:    #E8EAF0;
+      --c-muted:   #8f937b;
+      --c-border:  #1E2330;
+    }
+    body { background: var(--c-bg); color: var(--c-text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 180px;
+    }
+    * { cursor: none !important; }
+    #cursor {
+      width: 12px; height: 12px; background: var(--c-accent);
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;
+      transition: transform 80ms linear, width 150ms linear, height 150ms linear;
+    }
+    #cursor.expanded { width: 40px; height: 40px; transform: translate(-14px, -14px); background: transparent; border: 1px solid var(--c-accent); }
+    .snap { transition: all 150ms cubic-bezier(0.4,0,0.2,1); }
+    nav { background: rgba(8,10,15,0.88); backdrop-filter: blur(20px); }
+
+    /* Prose */
+    .legal-body h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      color: #E8EAF0;
+      margin: 2.5rem 0 0.75rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--c-border);
+    }
+    .legal-body h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    .legal-body p  { color: var(--c-muted); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
+    .legal-body ul { color: var(--c-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; list-style: none; }
+    .legal-body ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.4rem; }
+    .legal-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--c-accent); font-size: 0.75rem; top: 4px; }
+    .legal-body a  { color: var(--c-accent); text-decoration: underline; text-underline-offset: 3px; }
+    .legal-body strong { color: var(--c-text); font-weight: 500; }
+
+    /* Highlight box */
+    .hl-box {
+      background: var(--c-surface);
+      border-left: 2px solid var(--c-accent);
+      padding: 1rem 1.5rem;
+      margin: 1.25rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .hl-box p { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-border">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+    <a href="index.html" class="font-display text-xl text-text tracking-wide">LUCA<span class="text-lime">.</span>STUDIO</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#servicios" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Servicios</a>
+      <a href="index.html#precios"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Precios</a>
+      <a href="index.html#portfolio" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Portfolio</a>
+      <a href="index.html#contacto"
+         class="font-display text-sm tracking-widest px-5 py-2.5 snap"
+         style="background:var(--c-accent);color:#293500;">
+        Cotizar →
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO BAR -->
+<div class="pt-16">
+  <div class="bg-canvas border-b border-border px-6 md:px-12 py-16 max-w-full">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <a href="index.html" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Inicio</a>
+        <span class="text-border font-mono text-xs">/</span>
+        <span class="font-mono text-xs text-lime uppercase tracking-widest">Términos</span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl text-text tracking-wide leading-none mb-4">
+        TÉRMINOS DE<br><span class="text-lime">SERVICIO</span>
+      </h1>
+      <p class="font-mono text-xs text-muted mt-4">Última actualización: <span id="lastUpdated"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="max-w-4xl mx-auto px-6 md:px-12 py-16">
+  <div class="grid md:grid-cols-[240px_1fr] gap-12 items-start">
+
+    <!-- Sidebar TOC -->
+    <aside class="hidden md:block sticky top-24">
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Contenido</p>
+      <nav class="flex flex-col gap-1">
+        <a href="#aceptacion"    class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Aceptación</a>
+        <a href="#servicios-t"   class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Servicios</a>
+        <a href="#contratacion"  class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Contratación</a>
+        <a href="#pagos"         class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Pagos</a>
+        <a href="#entregas"      class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Entregas</a>
+        <a href="#revisiones"    class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Revisiones</a>
+        <a href="#propiedad"     class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Propiedad intelectual</a>
+        <a href="#garantia"      class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Garantía</a>
+        <a href="#cancelacion"   class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Cancelaciones</a>
+        <a href="#responsabilidad" class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Responsabilidad</a>
+        <a href="#ley"           class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Ley aplicable</a>
+      </nav>
+    </aside>
+
+    <!-- Body text -->
+    <div class="legal-body">
+
+      <p>Los presentes Términos de Servicio regulan la relación contractual entre <strong>Luca Studio</strong> (en adelante "el Proveedor") y el cliente que contrate sus servicios de diseño y desarrollo web (en adelante "el Cliente"). Al contratar cualquier servicio, el Cliente acepta íntegramente estas condiciones.</p>
+
+      <h2 id="aceptacion">1. Aceptación de los términos</h2>
+      <p>La contratación de cualquier servicio de Luca Studio — ya sea mediante acuerdo verbal, WhatsApp, email o firma de propuesta — implica la aceptación plena de estos Términos de Servicio. Si el Cliente no está de acuerdo con alguna condición, debe comunicarlo antes de iniciar el proyecto.</p>
+
+      <h2 id="servicios-t">2. Descripción de los servicios</h2>
+      <p>Luca Studio ofrece servicios de:</p>
+      <ul>
+        <li>Diseño y desarrollo de sitios web a medida.</li>
+        <li>Desarrollo de aplicaciones web progresivas (PWA).</li>
+        <li>Integración de formularios, sistemas de pago y funcionalidades dinámicas.</li>
+        <li>Mantenimiento mensual de sitios web activos.</li>
+        <li>Consultoría técnica para emprendimientos digitales.</li>
+      </ul>
+      <p>El alcance específico de cada proyecto se define en la propuesta comercial enviada antes del inicio del trabajo.</p>
+
+      <h2 id="contratacion">3. Proceso de contratación</h2>
+      <p>El proceso de contratación sigue estas etapas:</p>
+      <ul>
+        <li><strong>Consulta inicial:</strong> el Cliente describe sus necesidades y se elabora una propuesta personalizada.</li>
+        <li><strong>Aprobación de propuesta:</strong> el Cliente acepta la propuesta (por escrito, WhatsApp o email).</li>
+        <li><strong>Pago de anticipo:</strong> el proyecto inicia únicamente tras recibir el anticipo acordado.</li>
+        <li><strong>Desarrollo:</strong> se construye el proyecto según el alcance aprobado.</li>
+        <li><strong>Entrega y pago final:</strong> se entrega el proyecto tras recibir el saldo restante.</li>
+      </ul>
+
+      <div class="hl-box">
+        <p>Luca Studio no inicia ningún proyecto sin la confirmación del anticipo. La aceptación de la propuesta sin pago no reserva tiempo ni fecha de entrega.</p>
+      </div>
+
+      <h2 id="pagos">4. Condiciones de pago</h2>
+      <p>Los pagos se estructuran de la siguiente manera según el tipo de proyecto:</p>
+      <ul>
+        <li><strong>Proyectos hasta $450:</strong> 50% al inicio, 50% al entregar el sitio.</li>
+        <li><strong>Proyectos mayores a $450:</strong> 50% al inicio, 25% a la mitad del desarrollo, 25% al lanzar.</li>
+        <li><strong>Mantenimiento mensual:</strong> pago anticipado al inicio de cada mes.</li>
+      </ul>
+      <p><strong>Métodos de pago aceptados:</strong> SINPE Móvil, transferencia bancaria (colones o dólares), PayPal. Los precios en dólares se convierten al tipo de cambio de venta del BCCR del día del pago.</p>
+      <p>Los pagos vencidos por más de <strong>7 días hábiles</strong> pausan el trabajo sin penalización para el Proveedor. Los proyectos paralizados por falta de pago por más de <strong>30 días</strong> pueden ser cancelados con retención del anticipo.</p>
+
+      <h2 id="entregas">5. Plazos de entrega</h2>
+      <p>Los plazos de entrega son estimados y están sujetos a:</p>
+      <ul>
+        <li>Entrega oportuna de contenidos, imágenes y accesos por parte del Cliente.</li>
+        <li>Tiempo de respuesta del Cliente ante revisiones (máximo <strong>5 días hábiles</strong> por ciclo de revisión).</li>
+        <li>Alcance aprobado en la propuesta original.</li>
+      </ul>
+      <p>Si el Cliente tarda más de 5 días hábiles en responder durante el proceso, la fecha de entrega se recorre proporcionalmente sin responsabilidad para el Proveedor.</p>
+
+      <h2 id="revisiones">6. Revisiones y cambios de alcance</h2>
+      <p>Cada plan incluye un número de rondas de revisión:</p>
+      <ul>
+        <li><strong>Plan Básico ($200):</strong> 1 ronda de revisiones.</li>
+        <li><strong>Plan Pro ($325):</strong> 2 rondas de revisiones.</li>
+        <li><strong>Plan Premium ($450) y proyectos personalizados:</strong> 3 rondas de revisiones.</li>
+      </ul>
+      <p>Una "revisión" cubre ajustes de contenido, colores, textos y pequeñas modificaciones de layout dentro del diseño original aprobado. Los cambios que impliquen un rediseño completo, nuevas secciones o funcionalidades no contempladas en la propuesta se cotizan por separado.</p>
+
+      <div class="hl-box">
+        <p>Cualquier adición de funcionalidades o secciones fuera del alcance original se cotiza y cobra como trabajo adicional antes de ser ejecutado.</p>
+      </div>
+
+      <h2 id="propiedad">7. Propiedad intelectual</h2>
+      <p><strong>Tras el pago total del proyecto:</strong></p>
+      <ul>
+        <li>El Cliente recibe la propiedad completa del código fuente del sitio web.</li>
+        <li>El Cliente puede modificar, redistribuir o migrar el código sin restricciones.</li>
+        <li>Luca Studio conserva el derecho de mostrar el proyecto en su portfolio (con posibilidad de exclusión previa solicitud escrita del Cliente).</li>
+      </ul>
+      <p><strong>Mientras existan pagos pendientes:</strong> el código y el dominio pueden permanecer bajo control del Proveedor hasta completar el pago total.</p>
+      <p>Las imágenes, logotipos y contenidos provistos por el Cliente son de su responsabilidad exclusiva. El Cliente garantiza tener los derechos de uso de todo el material entregado.</p>
+
+      <h2 id="garantia">8. Garantía post-entrega</h2>
+      <p>Luca Studio ofrece una garantía de <strong>15 días calendario</strong> tras la entrega del proyecto. Durante este periodo se corregirán sin costo adicional:</p>
+      <ul>
+        <li>Errores de funcionamiento en funcionalidades incluidas en el alcance original.</li>
+        <li>Problemas de visualización en navegadores modernos (Chrome, Firefox, Safari, Edge).</li>
+        <li>Fallas en formularios o integraciones entregadas.</li>
+      </ul>
+      <p>La garantía no cubre daños causados por modificaciones del Cliente, actualizaciones de terceros o problemas en el hosting no gestionado por Luca Studio.</p>
+
+      <h2 id="cancelacion">9. Cancelaciones y reembolsos</h2>
+      <p><strong>Cancelación por parte del Cliente:</strong></p>
+      <ul>
+        <li>Antes de iniciar el trabajo: reembolso del 100% del anticipo.</li>
+        <li>Durante el desarrollo (semanas 1–2): reembolso del 50% del anticipo.</li>
+        <li>Después de la semana 2: el anticipo no es reembolsable. Se entrega el trabajo realizado hasta ese punto.</li>
+      </ul>
+      <p><strong>Cancelación por parte del Proveedor:</strong> Si Luca Studio no puede completar el proyecto por causas propias, reembolsará íntegramente los pagos recibidos.</p>
+
+      <h2 id="responsabilidad">10. Limitación de responsabilidad</h2>
+      <p>Luca Studio no será responsable por:</p>
+      <ul>
+        <li>Pérdidas de negocio, ingresos o datos derivadas del uso del sitio web.</li>
+        <li>Caídas del servicio causadas por Cloudflare, Firebase, registradores de dominio u otros terceros.</li>
+        <li>Penalizaciones de Google o redes sociales por contenido del Cliente.</li>
+        <li>Accesos no autorizados al sitio si el Cliente no sigue las recomendaciones de seguridad entregadas.</li>
+      </ul>
+      <p>La responsabilidad máxima del Proveedor ante cualquier reclamo no superará el monto total pagado por el proyecto en cuestión.</p>
+
+      <h2 id="ley">11. Ley aplicable y jurisdicción</h2>
+      <p>Estos Términos de Servicio se rigen por las leyes de la <strong>República de Costa Rica</strong>. Cualquier disputa se resolverá en primera instancia mediante mediación directa entre las partes. De no llegarse a un acuerdo, las controversias se someterán a los tribunales competentes de <strong>San José, Costa Rica</strong>.</p>
+      <p>Para consultas o reclamos: <a href="mailto:hola@lucastudio.com">hola@lucastudio.com</a></p>
+
+      <div class="mt-12 p-6 bg-surface border-l-2 border-lime">
+        <p class="font-display text-xl text-text uppercase mb-1">¿Alguna pregunta?</p>
+        <p class="font-mono text-xs text-muted mb-4">Aclaramos cualquier duda antes de firmar.</p>
+        <a href="https://wa.me/50662079239?text=Hola!%20Tengo%20una%20consulta%20sobre%20los%20t%C3%A9rminos%20de%20servicio"
+           target="_blank"
+           class="font-display text-sm tracking-widest px-5 py-3 inline-flex items-center gap-2 snap"
+           style="background:var(--c-accent);color:#293500;">
+          WhatsApp directo →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-void border-t border-border">
+  <div class="px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+    <div>
+      <div class="font-display text-2xl text-text tracking-wide mb-3">LUCA<span class="text-lime">.</span>STUDIO</div>
+      <p class="font-mono text-xs text-muted leading-relaxed">Sitios web que generan clientes.<br>Diseño editorial · Costa Rica.</p>
+    </div>
+    <div>
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Explorar</p>
+      <div class="flex flex-col gap-2">
+        <a href="index.html#servicios" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Servicios</a>
+        <a href="index.html#precios"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Precios</a>
+        <a href="index.html#contacto"  class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Legal</p>
+      <div class="flex flex-col gap-2">
+        <a href="privacidad.html" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Política de Privacidad</a>
+        <a href="terminos.html"   class="font-mono text-xs text-lime snap uppercase tracking-widest">Términos de Servicio</a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-border px-6 md:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+    <p class="font-mono text-xs text-muted">© 2026 Luca Studio · Todos los derechos reservados.</p>
+    <div class="flex gap-4">
+      <a href="privacidad.html" class="font-mono text-xs text-muted hover:text-lime snap">Privacidad</a>
+      <span class="text-muted font-mono text-xs">·</span>
+      <a href="terminos.html"   class="font-mono text-xs text-lime snap">Términos</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top  = e.clientY - 6 + 'px';
+  });
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+  });
+
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const d = new Date();
+  document.getElementById('lastUpdated').textContent = `${d.getDate()} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
+
+  const headings = document.querySelectorAll('.legal-body h2[id]');
+  const tocLinks  = document.querySelectorAll('aside a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    headings.forEach(h => { if (window.scrollY >= h.offsetTop - 140) current = h.id; });
+    tocLinks.forEach(l => {
+      const active = l.getAttribute('href') === `#${current}`;
+      l.style.color  = active ? 'var(--c-accent)' : '';
+      l.style.borderLeftColor = active ? 'var(--c-accent)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>

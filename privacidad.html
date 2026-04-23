@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Política de Privacidad de Luca Studio. Cómo recopilamos, usamos y protegemos tu información personal." />
+  <title>Política de Privacidad — Luca Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void:        '#080A0F',
+            canvas:      '#0F1117',
+            surface:     '#1e1f25',
+            surfaceHigh: '#37393f',
+            lime:        '#C8F135',
+            limeDim:     '#a8cc1a',
+            text:        '#E8EAF0',
+            muted:       '#8f937b',
+            chip:        '#46494e',
+            border:      '#1E2330',
+          },
+          fontFamily: {
+            display: ['"Bebas Neue"', 'sans-serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+            mono:    ['"DM Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --c-bg:      #080A0F;
+      --c-canvas:  #0F1117;
+      --c-surface: #1e1f25;
+      --c-accent:  #C8F135;
+      --c-text:    #E8EAF0;
+      --c-muted:   #8f937b;
+      --c-border:  #1E2330;
+    }
+    body { background: var(--c-bg); color: var(--c-text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 180px;
+    }
+    * { cursor: none !important; }
+    #cursor {
+      width: 12px; height: 12px; background: var(--c-accent);
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;
+      transition: transform 80ms linear, width 150ms linear, height 150ms linear;
+    }
+    #cursor.expanded { width: 40px; height: 40px; transform: translate(-14px, -14px); background: transparent; border: 1px solid var(--c-accent); }
+    .snap { transition: all 150ms cubic-bezier(0.4,0,0.2,1); }
+    nav { background: rgba(8,10,15,0.88); backdrop-filter: blur(20px); }
+
+    /* Prose styles */
+    .legal-body h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      color: #E8EAF0;
+      margin: 2.5rem 0 0.75rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--c-border);
+    }
+    .legal-body h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+    .legal-body p { color: var(--c-muted); font-size: 0.92rem; line-height: 1.8; margin-bottom: 1rem; }
+    .legal-body ul { color: var(--c-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.25rem; list-style: none; }
+    .legal-body ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.4rem; }
+    .legal-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--c-accent); font-size: 0.75rem; top: 4px; }
+    .legal-body a { color: var(--c-accent); text-decoration: underline; text-underline-offset: 3px; }
+    .legal-body strong { color: var(--c-text); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-border">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+    <a href="index.html" class="font-display text-xl text-text tracking-wide">LUCA<span class="text-lime">.</span>STUDIO</a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#servicios" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Servicios</a>
+      <a href="index.html#precios"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Precios</a>
+      <a href="index.html#portfolio" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Portfolio</a>
+      <a href="index.html#contacto"
+         class="font-display text-sm tracking-widest px-5 py-2.5 snap"
+         style="background:var(--c-accent);color:#293500;">
+        Cotizar →
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO BAR -->
+<div class="pt-16">
+  <div class="bg-canvas border-b border-border px-6 md:px-12 py-16 max-w-full">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <a href="index.html" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Inicio</a>
+        <span class="text-border font-mono text-xs">/</span>
+        <span class="font-mono text-xs text-lime uppercase tracking-widest">Privacidad</span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl text-text tracking-wide leading-none mb-4">
+        POLÍTICA DE<br><span class="text-lime">PRIVACIDAD</span>
+      </h1>
+      <p class="font-mono text-xs text-muted mt-4">Última actualización: <span id="lastUpdated"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<main class="max-w-4xl mx-auto px-6 md:px-12 py-16">
+  <div class="grid md:grid-cols-[240px_1fr] gap-12 items-start">
+
+    <!-- Sidebar TOC -->
+    <aside class="hidden md:block sticky top-24">
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Contenido</p>
+      <nav class="flex flex-col gap-1">
+        <a href="#responsable"   class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Responsable</a>
+        <a href="#datos"         class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Datos que recopilamos</a>
+        <a href="#uso"           class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Uso de la información</a>
+        <a href="#almacenamiento" class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Almacenamiento</a>
+        <a href="#terceros"      class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Terceros</a>
+        <a href="#derechos"      class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Tus derechos</a>
+        <a href="#cookies"       class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Cookies</a>
+        <a href="#contacto-legal" class="font-mono text-xs text-muted hover:text-lime snap py-1 border-l border-border pl-3 hover:border-lime">Contacto</a>
+      </nav>
+    </aside>
+
+    <!-- Body text -->
+    <div class="legal-body">
+
+      <p>En <strong>Luca Studio</strong> nos tomamos en serio la privacidad de las personas que visitan nuestro sitio y nos confían sus datos de contacto. Esta política explica qué información recopilamos, cómo la usamos y qué derechos tenés sobre ella, de conformidad con la <strong>Ley N.° 8968 — Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales</strong> de Costa Rica y las buenas prácticas internacionales (GDPR).</p>
+
+      <h2 id="responsable">1. Responsable del tratamiento</h2>
+      <p><strong>Luca Studio</strong>, operado por Jean Arias, con dirección en Moravia, San José, Costa Rica. Para cualquier consulta sobre esta política podés escribir a <a href="mailto:hola@lucastudio.com">hola@lucastudio.com</a>.</p>
+
+      <h2 id="datos">2. Datos que recopilamos</h2>
+      <p>Solo recopilamos lo estrictamente necesario para brindarte el servicio:</p>
+      <ul>
+        <li><strong>Datos de contacto:</strong> nombre, correo electrónico, número de teléfono (WhatsApp) y nombre del negocio que ingresás en el formulario de contacto.</li>
+        <li><strong>Datos de uso:</strong> información técnica como tu dirección IP, tipo de navegador y páginas visitadas, recopilada automáticamente por Cloudflare y herramientas de análisis.</li>
+        <li><strong>Comunicaciones:</strong> el contenido de los mensajes que nos enviás por formulario, email o WhatsApp.</li>
+      </ul>
+      <p>No recopilamos datos sensibles como número de cédula, información financiera ni datos de menores de edad.</p>
+
+      <h2 id="uso">3. Uso de la información</h2>
+      <p>Los datos que nos proporcionás son utilizados exclusivamente para:</p>
+      <ul>
+        <li>Responderte y gestionar tu consulta o cotización.</li>
+        <li>Elaborar propuestas comerciales personalizadas.</li>
+        <li>Dar seguimiento a proyectos en curso.</li>
+        <li>Mejorar el rendimiento y la experiencia de este sitio web.</li>
+      </ul>
+      <p>No usamos tus datos para publicidad de terceros ni los vendemos bajo ninguna circunstancia.</p>
+
+      <h2 id="almacenamiento">4. Almacenamiento y retención</h2>
+      <p>La información de contacto enviada por formulario se transmite directamente a través de <strong>WhatsApp Business</strong> (Meta). Luca Studio no almacena datos de formularios en servidores propios.</p>
+      <p>Los correos electrónicos se conservan el tiempo necesario para gestionar el proyecto o hasta que solicitás su eliminación. En todo caso, no más de <strong>3 años</strong> tras el último contacto.</p>
+
+      <h2 id="terceros">5. Servicios de terceros</h2>
+      <p>Este sitio utiliza los siguientes servicios externos que pueden procesar datos según sus propias políticas:</p>
+      <ul>
+        <li><strong>Cloudflare Pages</strong> — Hosting y CDN. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Ver política</a></li>
+        <li><strong>Google Fonts</strong> — Tipografías web. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Ver política</a></li>
+        <li><strong>WhatsApp Business (Meta)</strong> — Canal de comunicación. <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener">Ver política</a></li>
+      </ul>
+      <p>Luca Studio no es responsable de las prácticas de privacidad de estos terceros.</p>
+
+      <h2 id="derechos">6. Tus derechos</h2>
+      <p>De acuerdo con la Ley 8968 y el GDPR, tenés derecho a:</p>
+      <ul>
+        <li><strong>Acceso:</strong> solicitar qué datos tenemos sobre vos.</li>
+        <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos.</li>
+        <li><strong>Supresión:</strong> pedir que eliminemos tus datos personales.</li>
+        <li><strong>Oposición:</strong> oponerte a determinados usos de tus datos.</li>
+        <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado.</li>
+      </ul>
+      <p>Para ejercer cualquiera de estos derechos escribí a <a href="mailto:hola@lucastudio.com">hola@lucastudio.com</a> con el asunto "Derechos ARCO". Respondemos en un plazo máximo de <strong>30 días hábiles</strong>.</p>
+
+      <h2 id="cookies">7. Cookies</h2>
+      <p>Este sitio no utiliza cookies de seguimiento propias. Cloudflare puede utilizar cookies técnicas estrictamente necesarias para la seguridad y el rendimiento del sitio. Estas cookies no requieren consentimiento ya que son esenciales para el funcionamiento básico.</p>
+
+      <h2 id="contacto-legal">8. Contacto para temas de privacidad</h2>
+      <p>Para cualquier consulta relacionada con esta política o el tratamiento de tus datos personales:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:hola@lucastudio.com">hola@lucastudio.com</a></li>
+        <li><strong>Ubicación:</strong> Moravia, San José, Costa Rica</li>
+      </ul>
+      <p>También podés presentar una reclamación ante la <strong>Agencia de Protección de Datos de los Habitantes (PRODHAB)</strong> de Costa Rica si considerás que tus derechos han sido vulnerados.</p>
+
+      <div class="mt-12 p-6 bg-surface border-l-2 border-lime">
+        <p class="font-display text-xl text-text uppercase mb-1">¿Alguna duda?</p>
+        <p class="font-mono text-xs text-muted mb-4">Escribime directo, con gusto te explico.</p>
+        <a href="mailto:hola@lucastudio.com"
+           class="font-display text-sm tracking-widest px-5 py-3 inline-flex items-center gap-2 snap"
+           style="background:var(--c-accent);color:#293500;">
+          hola@lucastudio.com →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-void border-t border-border">
+  <div class="px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+    <div>
+      <div class="font-display text-2xl text-text tracking-wide mb-3">LUCA<span class="text-lime">.</span>STUDIO</div>
+      <p class="font-mono text-xs text-muted leading-relaxed">Sitios web que generan clientes.<br>Diseño editorial · Costa Rica.</p>
+    </div>
+    <div>
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Explorar</p>
+      <div class="flex flex-col gap-2">
+        <a href="index.html#servicios" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Servicios</a>
+        <a href="index.html#precios"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Precios</a>
+        <a href="index.html#contacto"  class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Contacto</a>
+      </div>
+    </div>
+    <div>
+      <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Legal</p>
+      <div class="flex flex-col gap-2">
+        <a href="privacidad.html" class="font-mono text-xs text-lime snap uppercase tracking-widest">Política de Privacidad</a>
+        <a href="terminos.html"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Términos de Servicio</a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-border px-6 md:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+    <p class="font-mono text-xs text-muted">© 2026 Luca Studio · Todos los derechos reservados.</p>
+    <div class="flex gap-4">
+      <a href="privacidad.html" class="font-mono text-xs text-lime snap">Privacidad</a>
+      <span class="text-muted font-mono text-xs">·</span>
+      <a href="terminos.html"   class="font-mono text-xs text-muted hover:text-lime snap">Términos</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top  = e.clientY - 6 + 'px';
+  });
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+  });
+
+  // Dynamic date
+  const months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const d = new Date();
+  document.getElementById('lastUpdated').textContent = `${d.getDate()} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
+
+  // TOC active on scroll
+  const headings = document.querySelectorAll('.legal-body h2[id]');
+  const tocLinks  = document.querySelectorAll('aside a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    headings.forEach(h => { if (window.scrollY >= h.offsetTop - 140) current = h.id; });
+    tocLinks.forEach(l => {
+      const active = l.getAttribute('href') === `#${current}`;
+      l.style.color  = active ? 'var(--c-accent)' : '';
+      l.style.borderLeftColor = active ? 'var(--c-accent)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>

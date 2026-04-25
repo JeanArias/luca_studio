@@ -133,26 +133,61 @@
     }
     .logo-fallback span { color: var(--c-accent); }
 
-    /* ─── HERO GRID BG ─── */
-    .hero-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--c-border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--c-border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.35;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+    /* ─── HERO BLOBS ─── */
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; will-change: transform;
+    }
+    .blob-1 {
+      width: 520px; height: 420px;
+      background: radial-gradient(ellipse, rgba(200,241,53,0.13) 0%, transparent 70%);
+      top: -80px; right: -120px;
+      animation: blobDrift1 14s ease-in-out infinite;
+    }
+    .blob-2 {
+      width: 440px; height: 360px;
+      background: radial-gradient(ellipse, rgba(200,241,53,0.08) 0%, transparent 70%);
+      bottom: -60px; left: -100px;
+      animation: blobDrift2 18s ease-in-out infinite;
+    }
+    @keyframes blobDrift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(-30px, 40px) scale(1.06); }
+      66%      { transform: translate(20px,-30px) scale(0.96); }
+    }
+    @keyframes blobDrift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(40px,-20px) scale(1.04); }
+      70%      { transform: translate(-20px, 30px) scale(0.98); }
     }
 
-    /* ─── GLITCH ─── */
-    @keyframes glitch {
-      0%,100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
-      20%      { clip-path: inset(20% 0 50% 0); transform: translate(-3px,1px); }
-      40%      { clip-path: inset(60% 0 10% 0); transform: translate(3px,-1px); }
-      60%      { clip-path: inset(40% 0 40% 0); transform: translate(-2px,2px); }
-      80%      { clip-path: inset(80% 0 5%  0); transform: translate(2px,-2px); }
+    /* ─── HERO ANNOUNCE PILL ─── */
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(200,241,53,0.28);
+      padding: 5px 14px 5px 8px; border-radius: 100px;
+      font-family: var(--f-mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--c-accent); white-space: nowrap;
     }
-    .glitch-layer { animation: glitch 3.5s steps(1) infinite; color: var(--c-accent); position: absolute; inset: 0; pointer-events: none; }
+    .pill-dot {
+      width: 7px; height: 7px; background: var(--c-accent);
+      border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0;
+    }
+
+    /* ─── HERO STATS ROW ─── */
+    .hero-stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--c-border);
+    }
+    .stat-cell {
+      padding: 20px 24px;
+      border-right: 1px solid var(--c-border);
+    }
+    .stat-cell:last-child { border-right: none; }
+    @media (max-width: 640px) {
+      .stat-cell { padding: 14px 16px; }
+    }
 
     /* ─── SERVICE CARDS ─── */
     .service-card { transition: background 150ms cubic-bezier(0.4,0,0.2,1); }
@@ -288,63 +323,60 @@
   <!-- ══════════════════════════════════════════
        HERO
   ══════════════════════════════════════════ -->
-  <section id="hero" class="min-h-screen bg-void flex flex-col justify-end px-6 md:px-12 pb-16 pt-32 relative overflow-hidden">
+  <section id="hero" class="min-h-screen bg-void flex flex-col items-center justify-center px-6 md:px-12 pt-20 pb-0 relative overflow-hidden text-center">
 
-    <!-- Grid background -->
-    <div class="hero-grid"></div>
+    <!-- Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
 
-    <!-- Glow -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
-         style="background: radial-gradient(ellipse, rgba(200,241,53,0.07) 0%, transparent 70%);"></div>
+    <!-- Subtle grid vignette -->
+    <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--c-border) 1px,transparent 1px),linear-gradient(90deg,var(--c-border) 1px,transparent 1px);background-size:60px 60px;opacity:0.18;mask-image:radial-gradient(ellipse 70% 60% at 50% 45%,black 20%,transparent 100%);"></div>
 
-    <div class="relative z-10 max-w-screen-xl mx-auto w-full">
+    <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center gap-6">
 
-      <!-- Tag pulsante -->
-      <div class="inline-flex items-center gap-2 mb-8" style="animation: fadeUp 0.6s ease both;">
-        <div class="w-2 h-2 bg-lime" style="animation: pulse 2s infinite; border-radius:0;"></div>
-        <span class="font-mono text-xs uppercase tracking-widest text-lime">Disponible para proyectos · Costa Rica</span>
+      <!-- Announce pill -->
+      <div class="hero-pill" style="animation: fadeUp 0.5s ease both;">
+        <span class="pill-dot"></span>
+        Disponible para proyectos · Costa Rica
       </div>
 
       <!-- Headline -->
-      <div class="relative" style="animation: fadeUp 0.6s 0.1s ease both;">
-        <h1 class="font-display text-[clamp(4rem,13vw,12rem)] tracking-hero leading-none text-text uppercase">
+      <div style="animation: fadeUp 0.55s 0.1s ease both;">
+        <h1 class="font-display uppercase leading-none text-text" style="font-size:clamp(3.6rem,12vw,10rem);letter-spacing:-0.01em;line-height:0.9;">
           SITIOS WEB<br/><span class="text-lime">QUE VENDEN</span>
         </h1>
-        <div class="glitch-layer font-display text-[clamp(4rem,13vw,12rem)] tracking-hero leading-none uppercase select-none" aria-hidden="true">
-          SITIOS WEB<br/>QUE VENDEN
+      </div>
+
+      <!-- Subtitle -->
+      <p class="font-body text-muted text-base md:text-lg max-w-lg leading-relaxed font-light" style="animation: fadeUp 0.55s 0.2s ease both;">
+        Páginas dinámicas, diseño moderno y formularios que convierten visitantes en clientes — entregadas en menos de 10 días.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex gap-4 flex-wrap justify-center" style="animation: fadeUp 0.55s 0.3s ease both;">
+        <a href="#contacto" class="btn-primary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+          Empezar proyecto
+        </a>
+        <a href="#portfolio" class="btn-ghost">Ver trabajos</a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="w-full mt-10 hero-stats-row" style="animation: fadeUp 0.55s 0.4s ease both;">
+        <div class="stat-cell">
+          <div class="font-display text-lime leading-none" style="font-size:clamp(2rem,6vw,3.8rem);">10</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-1">Días entrega</p>
+        </div>
+        <div class="stat-cell">
+          <div class="font-display text-lime leading-none" style="font-size:clamp(2rem,6vw,3.8rem);">$200</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-1">Desde</p>
+        </div>
+        <div class="stat-cell">
+          <div class="font-display text-lime leading-none" style="font-size:clamp(2rem,6vw,3.8rem);">100%</div>
+          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-1">Diseño único</p>
         </div>
       </div>
 
-      <!-- Subtítulo y CTAs -->
-      <div class="mt-8 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12" style="animation: fadeUp 0.6s 0.2s ease both;">
-        <p class="font-body text-muted text-lg max-w-md leading-relaxed font-light">
-          Páginas dinámicas, diseño moderno y formularios que convierten visitantes en clientes — entregadas en menos de 10 días.
-        </p>
-        <div class="flex gap-4 flex-wrap">
-          <a href="#contacto" class="btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
-            Empezar proyecto
-          </a>
-          <a href="#portfolio" class="btn-ghost">Ver trabajos</a>
-        </div>
-      </div>
-
-      <!-- Stats -->
-      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-0 border-t border-border pt-10" style="animation: fadeUp 0.6s 0.35s ease both;">
-        
-        <div class="border-r border-border px-12 pb-3">
-          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">10</div>
-          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Días de entrega</p>
-        </div>
-        <div class="border-r border-border px-12 pb-3">
-          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">$200</div>
-          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Desde</p>
-        </div>
-        <div class="pl-12 pb-3">
-          <div class="font-display text-[clamp(2rem,5vw,4rem)] text-lime leading-none">100%</div>
-          <p class="font-mono text-xs text-muted uppercase tracking-widest mt-2">Diseño único</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -737,50 +769,47 @@
        FOOTER
   ══════════════════════════════════════════ -->
   <footer class="bg-void border-t border-border">
-    <!-- Footer top grid -->
-    <div class="px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
 
-      <!-- Brand col -->
-      <div>
-        <div class="font-display text-2xl text-text tracking-wide mb-3">LUCA<span class="text-lime">.</span>STUDIO</div>
-        <p class="font-mono text-xs text-muted leading-relaxed">Sitios web que generan clientes.<br>Diseño editorial · Costa Rica.</p>
-        <div class="flex gap-4 mt-5">
-          <a href="https://instagram.com/" target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Instagram</a>
-          <a href="https://linkedin.com/" target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">LinkedIn</a>
+    <!-- Footer top grid — collapses to 2-col on mobile, 3-col on md -->
+    <div class="px-6 md:px-12 py-8 md:py-12 grid grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+      <!-- Brand col — full width on mobile -->
+      <div class="col-span-2 md:col-span-1">
+        <div class="font-display text-xl text-text tracking-wide mb-2">LUCA<span class="text-lime">.</span>STUDIO</div>
+        <p class="font-mono text-xs text-muted leading-relaxed">Sitios web que generan clientes.<br class="hidden md:block">Diseño editorial · Costa Rica.</p>
+        <div class="flex gap-4 mt-3">
+          <a href="https://instagram.com/" target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">IG</a>
+          <a href="https://linkedin.com/"  target="_blank" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">LI</a>
         </div>
       </div>
 
       <!-- Nav col -->
       <div>
-        <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Explorar</p>
-        <div class="flex flex-col gap-2">
+        <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">Explorar</p>
+        <div class="flex flex-col gap-1.5">
           <a href="index.html#servicios" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Servicios</a>
           <a href="index.html#precios"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Precios</a>
           <a href="index.html#portfolio" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Portfolio</a>
-          <a href="index.html#proceso"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Proceso</a>
           <a href="index.html#contacto"  class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Contacto</a>
         </div>
       </div>
 
       <!-- Legal col -->
       <div>
-        <p class="font-mono text-xs text-muted uppercase tracking-widest mb-4">Legal</p>
-        <div class="flex flex-col gap-2">
-          <a href="privacidad.html" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Política de Privacidad</a>
-          <a href="terminos.html"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Términos de Servicio</a>
+        <p class="font-mono text-xs text-muted uppercase tracking-widest mb-3">Legal</p>
+        <div class="flex flex-col gap-1.5">
+          <a href="privacidad.html" class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Privacidad</a>
+          <a href="terminos.html"   class="font-mono text-xs text-muted hover:text-lime snap uppercase tracking-widest">Términos</a>
         </div>
-        <div class="mt-6 pt-5 border-t border-border">
-          <p class="font-mono text-xs text-muted">📍 Moravia, San José, Costa Rica</p>
-          <a href="mailto:hola@luca-studio.com" class="font-mono text-xs text-muted hover:text-lime snap">hola@luca-studio.com</a>
-        </div>
+        <p class="font-mono text-xs text-muted mt-3">📍 Moravia, CR</p>
       </div>
 
     </div>
 
-    <!-- Footer bottom bar -->
-    <div class="border-t border-border px-6 md:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
-      <p class="font-mono text-xs text-muted">© 2026 Luca Studio · Todos los derechos reservados.</p>
-      <div class="flex gap-4">
+    <!-- Bottom bar -->
+    <div class="border-t border-border px-6 md:px-12 py-3 flex flex-wrap items-center justify-between gap-2">
+      <p class="font-mono text-xs text-muted">© 2026 Luca Studio</p>
+      <div class="flex gap-3">
         <a href="privacidad.html" class="font-mono text-xs text-muted hover:text-lime snap">Privacidad</a>
         <span class="text-muted font-mono text-xs">·</span>
         <a href="terminos.html"   class="font-mono text-xs text-muted hover:text-lime snap">Términos</a>

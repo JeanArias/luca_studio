@@ -1,0 +1,47 @@
+# Luca Studio
+
+> Sitios web que generan clientes. Diseño editorial brutalista entregado en 10 días desde $200.
+
+## Información General
+- **Empresa**: Luca Studio
+- **Fundador / Operador**: Jean Arias
+- **Ubicación**: Moravia, San José, Costa Rica
+- **Contacto**: +506 8945 8670 (WhatsApp)
+- **Email**: hola@luca-studio.com
+- **Propuesta**: Diseño y desarrollo de sitios web a medida (Landing Pages, Presskits, Sitios de Negocio) con un enfoque en rendimiento, SEO y alta conversión.
+
+## Servicios Clave
+1.  **Landing Page ($200)**: Diseño 100% personalizado, formulario de contacto, optimización móvil y carga en < 2s.
+2.  **Presskit / Portafolio**: Ideal para artistas y músicos, incluye galería dinámica, reproductor de media y formulario de booking.
+3.  **Sitio de Negocio**: Para talleres, clínicas, etc. Incluye secciones de servicios, galería, mapa, horarios y CTA.
+
+## Planes de Inversión
+- **Básico ($200)**: Página única, 5-7 días de entrega. *(Hosting NO incluido)*
+- **Pro ($325)**: Sitio multipágina, animaciones, galería interactiva, SEO básico, Hosting Cloudflare incluido. *(Más popular)*
+- **Premium ($450)**: Diseño editorial avanzado, animaciones scroll, integración con redes sociales, 1 mes de soporte.
+
+## Diferenciadores Técnicos
+- **Tecnología**: HTML5, Tailwind CSS, JavaScript (Vanilla), Cloudflare Pages.
+- **Rendimiento**: Código limpio, imágenes WebP, Core Web Vitals optimizados (LCP < 2.5s).
+- **SEO**: Arquitectura de venta, Schema markup, meta tags, estructura semántica.
+- **Plazo**: Entregas entre 5 y 14 días según el plan.
+- **Dominio**: Incluye 1 año de dominio .com o .cr.
+
+## Portfolio Destacado
+- **Amor de Perro**: Salón de grooming (Moravia, CR). Landing page con Bento Grid y WhatsApp.
+- **Santero DJ**: Presskit para artista musical. Diseño dark y reproductor de tracks.
+- **Taller Victoria**: Sitio para taller mecánico industrial (Lima, Perú).
+
+## Proceso de Trabajo
+1.  **Día 1**: Consulta inicial (15-30 min sin compromiso).
+2.  **Días 2-3**: Propuesta con precio fijo y boceto de diseño.
+3.  **Días 4-9**: Desarrollo con avances cada 2 días.
+4.  **Día 10**: Entrega, despliegue en Cloudflare y guía de uso.
+
+## Legal
+- [Política de Privacidad](https://luca-studio.com/privacidad.html)
+- [Términos de Servicio](https://luca-studio.com/terminos.html)
+
+## Redes Sociales
+- Instagram: [@luca.studio.cr](#) (Placeholder)
+- LinkedIn: [Luca Studio](#) (Placeholder)
